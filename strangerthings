@@ -1,0 +1,830 @@
+Personaje Eleven;
+Personaje Demogorgon1;
+Personaje Demogorgon2;
+Personaje Demogorgon3;
+Personaje Demogorgon4;
+
+Personaje player1;
+Personaje player2;
+
+PFont letras;
+PFont letras2;
+int aparecepantalla;
+int tecla;
+
+PFont textoseleccion;
+int jugador1;
+int jugador2;
+
+PImage pelea;
+
+int turno = 0;
+
+PImage ganaste;
+PFont textoganaste;
+
+PImage ganaste2;
+PFont textoganaste2;
+
+PFont textopelea;
+
+PImage waffle;
+PImage caja;
+PImage rayosmentaless;
+PImage baba;
+PImage bola;
+PImage rayo;
+
+int movimiento = 250;
+int posinicial = 250;
+int movimiento2 = 600;
+int posinicial2 =600;
+
+import ddf.minim.*;
+
+Minim minim;
+AudioSample st;
+
+
+void setup(){ //----------------------------------------------------------------------------------------------------------------S   E   T   U   P ----------------------------------------------------------------------------
+size(1000,500);
+Eleven = new Personaje("Eleven", 300,80,50,90,0);
+Demogorgon1 = new Personaje("Demogorgon1", 300,40,50,70,1);
+Demogorgon2 = new Personaje("Demogorgon2", 300,60,50,80,2);
+Demogorgon3 = new Personaje("Demogorgon3", 300,60,50,70,3);
+Demogorgon4 = new Personaje("Demogorgon4", 300,40,80,75,4);
+
+ 
+  letras=  createFont("DiplomataSC-Regular.ttf",200);
+  letras2=createFont("PressStart2P-Regular.ttf", 100);
+  
+  textoseleccion=  createFont("PressStart2P-Regular.ttf",200);
+   pelea =  loadImage("tormenta.jpg");
+   
+    ganaste =  loadImage("ganaste1.jpg");
+ textoganaste=  createFont("PressStart2P-Regular.ttf",200);
+ 
+ ganaste2=  loadImage("ganaste1.jpg");
+ textoganaste2 = createFont("PressStart2P-Regular.ttf",200);
+ 
+ textopelea = createFont("PressStart2P-Regular.ttf",50);
+ 
+  waffle=  loadImage("waffle.png");
+  waffle.resize(70, 70);
+  caja=  loadImage("caja.png");
+  caja.resize(70,70);
+  rayosmentaless=  loadImage("rayosmentaless.png");
+  rayosmentaless.resize(200,200);
+  baba=  loadImage("baba.png");
+  baba.resize(100, 100);
+  bola=  loadImage("bola.png");
+  bola.resize(80, 80);
+  rayo=  loadImage("rayo.png");
+  rayo.resize(250, 250);
+  
+  minim = new Minim(this);
+  st= minim.loadSample("st.mp3",1024);
+  
+  st.trigger();
+
+
+}
+
+void draw(){ //---------------------------------------------------------------------------------------------------------------------------D  R   A   W -------------------------------------------------------------------------
+  
+  Pantallas();
+
+}
+
+void Pantallas(){ // --------------------------------------------------------------------V   O   I   D     P   A   N   T   A   L   L    A   S ------------------------------------------------------------
+  switch(aparecepantalla){
+  case 0:
+  Inicio();
+  break;
+    case 1:
+  SeleccionJugador1();
+  break;
+  case 2:
+  SeleccionJugador2();
+  break;
+  case 3:
+  Pelea();
+  keyReleased();
+  barraVida();
+  break;
+  case 4:
+  ganaste();
+  break;
+  case 5:
+  ganaste2();
+  break;
+  }
+
+}
+
+void Inicio(){ //-----------------------------------------------------------------------------V   O   I   D     P   A   N   T   A   L   L   A     I   N   I   C   I   O-------------------------------------------------------------------------
+  background(0);
+ fill(204,0,0);
+  
+  rect(105,95,775,15); fill(0); rect(108,98,768,8);   
+   fill(204,0,0); rect(60,190,40,15); fill(0); rect(63,193,35,8); 
+    fill(204,0,0); rect(880,190,60,15); fill(0); rect(883,193,55,8); 
+  
+  
+    fill(204,0,0);
+  textFont(letras, 80);   
+  text("ELEVEN", 100, 185); 
+  
+   textFont(letras, 70);   
+  text("Y", 790, 185);  
+  
+   textFont(letras, 60);   
+  text("Demogorgons", 120, 250);  
+   textFont(letras, 15);   
+  text("L", 65, 220);  
+   textFont(letras, 15);   
+  text("O", 65, 235);
+  textFont(letras, 15);   
+  text("S", 65, 250);
+   
+ fill(255);  
+  textFont(letras2, 20);   
+  text("Clic to start", 350, 380);
+  
+  if (mousePressed){
+  aparecepantalla = 1;
+  }
+}
+
+void SeleccionJugador1(){ //-----------------------------------------------------------------------------------------------V   O   I   D     P   A   N   T   A   L   L   A     S   E   L   E   C   C   I   O   N     1 -----------------------------------
+  background(102,0,102);
+  fill(255);
+  textFont(textoseleccion, 25);   
+  text("JUGADOR 1: SELECCIONA TU PERSONAJE", 70, 90); 
+   textFont(textoseleccion, 15);   
+  text("Press E", 100, 185);
+  if(keyPressed){
+  if (key == 'e'){
+    jugador1 = 0;
+    player1 = Eleven;
+  aparecepantalla = 2;
+  }
+  }
+  textFont(textoseleccion, 15);   
+  text("for Eleven", 83, 205);
+     textFont(textoseleccion, 15);   
+  text("Press 1", 270, 185); 
+    if(keyPressed){
+  if (key == '1'){
+    jugador1 = 1;
+    player1 = Demogorgon1;
+  aparecepantalla = 2;
+  }
+  }
+  textFont(textoseleccion, 15);   
+  text("Press 2", 480, 240);
+    if(keyPressed){
+  if (key == '2'){
+    jugador1 = 2;
+    player1 = Demogorgon2;
+  aparecepantalla = 2;
+  }
+  }
+   text("Press 3", 675, 270);
+     if(keyPressed){
+  if (key == '3'){
+    jugador1 = 3;
+    player1 = Demogorgon3;
+  aparecepantalla = 2;
+  }
+  }
+    text("Press 4", 820, 275);
+      if(keyPressed){
+  if (key == '4'){
+    jugador1 = 4;
+    player1 = Demogorgon4;
+  aparecepantalla = 2;
+  }
+  }
+   pushMatrix();
+   translate(30,150);
+   Eleven.Dibujar();
+   popMatrix();
+   
+   pushMatrix();
+   translate(500,180);
+   Demogorgon1.Dibujar();
+   popMatrix();
+ 
+ pushMatrix();
+      translate(670,190);
+   Demogorgon2.Dibujar();
+   popMatrix();
+   
+    pushMatrix();
+      translate(50,95);
+   Demogorgon3.Dibujar();
+   popMatrix();
+   
+   pushMatrix();
+      translate(320,160);
+   Demogorgon4.Dibujar();
+     popMatrix();
+  
+
+}
+void SeleccionJugador2(){ //-----------------------------------------------------------------------------------------------V   O   I   D     P   A   N   T   A   L   L   A     S   E   L   E   C   C   I   O   N        2 -----------------------------------
+  background(102,0,102);
+  fill(255);
+  textFont(textoseleccion, 25);   
+  text("JUGADOR 2: SELECCIONA TU PERSONAJE", 70, 90); 
+   textFont(textoseleccion, 15);   
+  text("Press L", 100, 185); 
+  if(keyPressed){
+  if (key == 'l'){
+    jugador2 = 0;
+    player2 = Eleven;
+  aparecepantalla = 3;
+  }
+  }
+  textFont(textoseleccion, 15);   
+  text("Press 5", 270, 185); 
+  if(keyPressed){
+  if (key == '5'){
+    jugador2 = 1;
+    player2 = Demogorgon1;
+  aparecepantalla = 3;
+  }
+  }
+  textFont(textoseleccion, 15);   
+  text("Press 6", 480, 240);
+  if(keyPressed){
+  if (key == '6'){
+    jugador2 = 2;
+    player2 = Demogorgon2;
+  aparecepantalla = 3;
+  }
+  }
+   text("Press 7", 675, 270);
+   if(keyPressed){
+  if (key == '7'){
+    jugador2 = 3;
+    player2 = Demogorgon3;
+  aparecepantalla = 3;
+  }
+  }
+    text("Press 8", 820, 275);
+    if(keyPressed){
+  if (key == '8'){
+    jugador2 = 4;
+    player2 = Demogorgon4;
+  aparecepantalla = 3;
+  }
+  }
+   pushMatrix();
+   translate(30,150);
+   Eleven.Dibujar();
+   popMatrix();    
+   
+   pushMatrix();
+   translate(500,180);
+   Demogorgon1.Dibujar();
+   popMatrix();
+ 
+ pushMatrix();
+      translate(670,190);
+   Demogorgon2.Dibujar();
+   popMatrix();
+   
+    pushMatrix();
+      translate(50,95);
+   Demogorgon3.Dibujar();
+   popMatrix();
+   
+   pushMatrix();
+      translate(320,160);
+   Demogorgon4.Dibujar();
+     popMatrix();
+  
+
+}
+
+
+void Pelea(){  
+  
+   background(51,0,102);
+   image(pelea,0,0);
+   
+   fill(255);
+  textFont(textopelea, 13);   
+  text("Q = ataque 1", 20, 95); 
+  text("W = ataque 2", 20, 120); 
+  text("R = poder especial",20, 145);
+  text("O = ataque 1", 825
+  , 95);  
+  text("P = ataque 2", 825, 120); 
+  text("I = poder especial", 750, 145);
+
+   
+   
+  
+   if(jugador1 == 0){
+    pushMatrix();
+    translate(100,100);
+    Eleven.Dibujar();
+    popMatrix();
+   
+  }
+  else if( jugador1 == 1){
+    pushMatrix();
+    translate(100,100);
+    Demogorgon3.Dibujar();
+    popMatrix();
+  }
+   else if(jugador1 == 2){
+    pushMatrix();
+    translate(100,100);
+    Demogorgon4.Dibujar();
+    popMatrix();
+  }
+  else if( jugador1 == 3){
+    pushMatrix();
+    translate(100,100);
+    Demogorgon1.Dibujar();
+    popMatrix();
+  }
+  else if(jugador1 == 4){
+    pushMatrix();
+    translate(100,100);
+    Demogorgon2.Dibujar();
+    popMatrix();
+  }
+   
+   
+  if(jugador2 == 0){
+     pushMatrix();
+     translate(500,100);
+     Eleven.Dibujar();
+     popMatrix();
+  }
+  else if( jugador2 == 1){
+     pushMatrix();
+     translate(500,100);
+     Demogorgon3.Dibujar();
+     popMatrix();
+  }
+  else if(jugador2 == 2){
+     pushMatrix();
+     translate(500,100);
+     Demogorgon4.Dibujar(); 
+     popMatrix();
+  }
+   else if( jugador2 == 3){
+      pushMatrix();
+     translate(500,100);
+     Demogorgon1.Dibujar();
+     popMatrix();
+  }
+  else if(jugador2 == 4){
+     pushMatrix();
+     translate(500,100);
+     Demogorgon2.Dibujar();
+     popMatrix();
+  }
+  
+if (turno == 0){
+  if(keyPressed){
+   if(key == 'q'){
+   player2.vida = player2.vida - player1.ataque ;
+   turno = 1;
+    image(waffle,posinicial,250);
+   
+} 
+    
+   }
+  if(key == 'w'){   
+    player2.vida = player2.vida - player1.ataque2 ;
+    turno = 1;
+    image(caja,posinicial,250);
+  }
+  if(key == 'r'){
+   player2.vida = player2.vida - player1.poderEspecial;
+   turno = 1;
+   image(rayosmentaless,600,200);
+  }
+  if(player2.vida<=0){
+  aparecepantalla = 4;
+  }
+  
+}
+
+
+if (turno == 1){
+  if(keyPressed){
+   if(key == 'o'){
+   player1.vida = player1.vida - player2.ataque ;
+   turno = 0;
+   image(baba,posinicial2,200);
+   }
+  if(key == 'p'){   
+    player1.vida = player1.vida - player2.ataque2 ;
+    turno = 0;
+    image(bola,posinicial2,200);
+      }
+       if(key == 'i'){
+   player1.vida = player1.vida - player2.poderEspecial;
+   turno = 0;
+   image(rayo,posinicial2,100);
+  }
+  
+   if(player1.vida<=0){
+  aparecepantalla = 5;
+  }
+   }
+}
+}
+
+
+void keyReleased(){
+
+        if(jugador1 == 0){
+  if(key == 'q'){
+    image(waffle,movimiento,250);
+      movimiento+=4;
+      if(movimiento >= 700){
+      movimiento = 250;
+      }}
+  if(key == 'w'){  
+    image(caja,movimiento,250);
+    movimiento+=4;
+    if(movimiento >= 700){
+      movimiento = 250;
+      }}
+      
+        if(key == 'r'){  
+   image(rayosmentaless,movimiento,200);
+    movimiento+=4;
+    if(movimiento >= 700){
+      movimiento = 250;
+      }
+
+        }} 
+        if(jugador2 ==0){
+            if(key == 'o'){
+    image(baba,movimiento2,250);
+      movimiento2-=4;
+      if(movimiento2 <= 250){
+      movimiento2 = 600;
+      }}
+  if(key == 'p'){  
+    image(bola,movimiento2,250);
+    movimiento2-=4;
+    if(movimiento2 <= 250){
+      movimiento2 = 600;
+      }}
+      
+        if(key == 'i'){  
+   image(rayo,movimiento2,200);
+    movimiento2-=4;
+    if(movimiento2 <= 250){
+      movimiento2 = 600;
+      }
+        }    
+         }
+         
+    if(jugador1 == 1 || jugador1 ==2 || jugador1 ==3 || jugador1 ==4){
+      
+        if(key == 'q'){
+    image(waffle,movimiento,250);
+      movimiento+=4;
+      if(movimiento >= 600){
+      movimiento = 250;
+      }}
+  if(key == 'w'){  
+    image(caja,movimiento,250);
+    movimiento+=4;
+    if(movimiento >= 600){
+      movimiento = 250;
+      }}
+      
+        if(key == 'r'){  
+   image(rayosmentaless,movimiento,200);
+    movimiento+=4;
+    if(movimiento >= 600){
+      movimiento = 250;
+      }
+        }
+        
+    }
+    
+    if(jugador2 == 1 || jugador2 ==2 || jugador2 ==3 || jugador2 ==4){
+        if(key == 'o'){
+    image(baba,movimiento2,250);
+      movimiento2-=4;
+      if(movimiento2 <= 250){
+      movimiento2 = 600;
+      }}
+  if(key == 'p'){  
+    image(bola,movimiento2,250);
+    movimiento2-=4;
+    if(movimiento2 <= 250){
+      movimiento2 = 600;
+      }}
+      
+        if(key == 'i'){  
+   image(rayo,movimiento2,200);
+    movimiento2-=4;
+    if(movimiento2 <= 250){
+      movimiento2 = 600;
+      }
+        }
+    
+    }
+
+
+}
+
+void barraVida(){
+
+  fill(255,128,0);
+  rect(100,50, player1.vida, 20);
+  rect(550,50, player2.vida, 20);
+  
+  
+}
+
+void ganaste(){
+  background(204,0,0);
+  image(ganaste,0,0);
+fill(255,255,0);
+  textFont(textoganaste, 50);   
+  text("¡GANASTE JUGADOR 1!", 35, 400); 
+   textFont(textoganaste, 15);   
+  text("Pulsa S para reiniciar", 320, 450); 
+  
+  if(keyPressed){
+  if(key == 's'){
+  Eleven = new Personaje("Eleven", 300,80,50,90,0);
+Demogorgon1 = new Personaje("Demogorgon1", 300,40,50,70,1);
+Demogorgon2 = new Personaje("Demogorgon2", 300,60,50,80,2);
+Demogorgon3 = new Personaje("Demogorgon3", 300,60,50,70,3);
+Demogorgon4 = new Personaje("Demogorgon4", 300,40,80,75,4);
+
+aparecepantalla = 0;
+  
+  }
+  }
+
+}
+
+void ganaste2(){
+   background(204,0,0);
+  image(ganaste,0,0);
+fill(255,255,0);
+  textFont(textoganaste2, 50);   
+  text("¡GANASTE JUGADOR 2!", 35, 400); 
+   textFont(textoganaste, 15);   
+  text("Pulsa S para reiniciar", 320, 450); 
+  
+  
+    if(keyPressed){
+  if(key == 's'){
+  Eleven = new Personaje("Eleven", 300,80,50,90,0);
+Demogorgon1 = new Personaje("Demogorgon1", 300,40,50,70,1);
+Demogorgon2 = new Personaje("Demogorgon2", 300,60,50,80,2);
+Demogorgon3 = new Personaje("Demogorgon3", 300,60,50,70,3);
+Demogorgon4 = new Personaje("Demogorgon4", 300,40,80,75,4);
+
+aparecepantalla = 0;
+  
+  }
+  }
+
+
+ 
+}
+
+
+
+
+
+class Personaje{ // -----------------------------------------------------------------------------------------------------------------------------------C   L   A   S   E ----------------------------------------------------------
+  
+  String nombre;
+  int vida;
+  int ataque;
+  int ataque2;
+  int poderEspecial;
+  int figura;  
+
+  Personaje(String nombre_,int vida_, int ataque_, int ataque2_, int poderEspecial_,int figura_){
+  nombre = nombre_;
+  vida = vida_;
+  ataque = ataque_;
+  ataque2 = ataque2_;
+  poderEspecial = poderEspecial_;
+  figura = figura_;
+  }
+
+
+
+void Dibujar(){ //---------------------------------------------------------------------------------------------------------------------------------------------V   O   I   D        D   I   B   U   J   A   R -----------------------------------------
+switch(figura){
+      case 0:
+       fill(102,51,0); 
+  rect(105,100,40,5);
+  rect(100,105,50,5);
+  rect(100,110,50,5);
+  rect(100,125,50,5);
+  rect(110,115,30,5);  
+  fill(255,229,204);
+  noStroke();
+  rect(100,120,50,40);
+  rect(105,160,40,5);
+  rect(110,165,30,5);
+  rect(115,170,20,5);
+  rect(120,175,10,10);
+  rect(105,115,5,5);   fill(102,51,0); rect(100,115,50,3);
+   fill(255,229,204); 
+  rect(140,115,5,5);fill(102,51,0); rect(100,115,50,3); fill(102,51,0); rect(100,115,5,10); rect(145,115,5,10);
+   fill(255,229,204); rect(100,240,50,5); 
+  fill(0,0,153);
+  rect(105,180,40,5);
+  rect(105,185,10,60);
+  rect(135,185,10,60);
+  rect(100,190,5,50);
+  rect(145,190,5,50);
+  
+  fill(255,204,204);
+  rect(105,245,40,50);
+  rect(110,240,30,5);
+  rect(115,180,20,70);
+  
+  fill(255);
+  rect(115,295,5,50);  fill(255,229,204); rect(115,295,5,20); 
+   fill(255);
+  rect(130,295,5,50); fill(255,229,204);rect(130,295,5,20); fill(0,153,0); rect(115,320,5,2); rect(130,320,5,2); rect(115,328,5,2); rect(130,328,5,2);
+  fill(255,255,0); rect(115,324,5,2); rect(130,324,5,2); fill(0); rect(115,344,5,2); rect(130,344,5,2);
+   fill(255);
+  rect(110,345,10,5); rect(130,345,10,5);
+  rect(115,180,20,5);
+  rect(115,185,5,5); rect(130,185,5,5);
+  
+  fill(51,0,0);
+  rect(110,135,5,2);rect(115,137,5,2);
+  rect(135,135,5,2);rect(131,137,5,2);
+  rect(115,140,3,5);rect(130,140,3,5);
+  rect(122,150,5,2); fill(255,0,0); rect(122,150,2,7);
+   fill(204,0,102); rect(120,160,10,3);
+      break;
+      
+      case 1:
+  
+      noStroke();
+  fill(96,96,96);
+  rect(205,100,50,5);
+  rect(200,105,60,10); fill(32,32,32); rect(210,105,5,3); rect(245,105,5,3); 
+  rect(215,108,5,3); rect(240,108,5,3);
+  rect(220,111,3,3); rect(237,111,3,3); 
+  fill(96,96,96);
+  rect(205,115,50,5);
+  rect(210,120,40,5);
+  rect(215,125,30,5);
+  rect(220,130,20,5);
+  rect(225,135,10,15);
+  rect(210,145,40,5);
+  rect(205,150,50,5);
+  rect(200,155,60,5);
+  rect(200,160,10,10); rect(215,160,30,5); rect(250,160,10,10);
+  rect(195,170,10,10); rect(215,165,30,5); rect(255,170,10,10);
+  rect(190,180,10,10); rect(215,170,30,5); rect(230,180,10,10);
+  rect(185,190,10,10); rect(215,175,30,5); rect(260,180,10,10);
+  rect(180,200,10,10); rect(220,180,20,15); rect(265,190,10,10);
+  rect(175,210,10,10); rect(225,195,10,10); rect(270,200,10,10);
+  rect(275,210,10,10); rect(165,220,10,5); rect(285,220,10,5);
+  rect(220,205,20,5);
+  rect(215,210,30,10);
+  rect(210,220,40,5);
+  rect(205,225,50,5);
+  rect(200,230,25,5); rect(235,230,25,5);
+  rect(195,235,25,5); rect(240,235,25,5);
+  rect(195,240,20,10); rect(245,240,20,10);
+  rect(195,250,15,10); rect(250,250,15,10);
+  rect(195,260,10,10); rect(255,260,10,10);
+  rect(195,270,10,15); rect(255,270,10,15);
+  rect(197,285,6,10); rect(257,285,6,10);
+  rect(199,295,3,10); rect(258,295,3,10);
+
+      break;
+      
+      case 2:
+      
+ noStroke();
+  fill(0);
+  rect(200,100,3,5);
+  rect(199,105,5,5);
+  rect(198,110,8,3);
+  rect(195,113,12,5);
+  rect(190,118,22,5);
+  rect(185,123,32,15);
+  rect(187,138,28,10);
+  rect(191,148,20,10);
+  rect(195,158,12,10);
+  rect(187,158,28,10);
+  rect(184,168,34,10);
+  rect(180,178,42,5);
+  rect(170,183,10,10); rect(185,183,30,40); rect(220,183,10,10);
+  rect(150,193,20,5); rect(185,223,30,20); rect(230,193,20,5);
+  rect(130,198,20,5); rect(250,198,20,5);
+  rect(130,193,10,5); rect(260,193,10,5);
+ fill(255,128,0); triangle(130,188,133,175,135,188); triangle(263,188,265,175,268,188);
+ fill(0);
+  rect(180,243,40,10); rect(183,235,35,10);
+  triangle(180,253,190,310,200,253); triangle(200,253,210,310,220,253);
+  fill(255); rect(190,125,3,3); rect(193,128,3,3);
+  rect(208,125,3,3); rect(205,128,3,3);
+
+      break;
+      case 3:
+     noStroke();
+  fill(27,30,68);
+  rect(275,95,10,5);
+  rect(265,100,25,5);   
+  rect(255,105,35,5);
+  rect(245,110,50,5);   
+  rect(235,115,60,5);
+  rect(225,120,70,5);  
+  rect(215,125,75,5);
+  rect(200,130,85,10);
+  rect(205,140,90,10);
+  rect(205,150,105,5);
+  rect(205,155,115,5);
+  rect(200,160,50,5);
+  rect(200,165,25,3);  
+  rect(275,160,55,5);
+  rect(275,165,60,5);
+  rect(275,170,63,5);
+  rect(273,175,60,10);
+  rect(270,180,60,5);
+  rect(267,185,60,15);
+  rect(267,200,65,20);
+  rect(270,220,60,20);
+  rect(273,240,55,5);
+  rect(273,245,50,10);
+  rect(273,255,45,10);
+  rect(273,265,40,10);
+  rect(273,275,35,20);
+  rect(273,295,30,20);
+  rect(273,315,25,20);
+  rect(280,335,35,10);
+  rect(305,325,30,10);
+  rect(310,315,20,10);
+  rect(285,345,20,5);
+  rect(320,335,20,20);
+  rect(315,355,20,20);
+  rect(310,375,20,20);
+  rect(305,395,20,10);
+  triangle(305,395,250,405,305,405);
+  rect(250,230,30,15);
+  rect(235,245,30,10);
+  rect(215,240,30,10);
+  rect(213,245,10,20);
+  triangle(210,265,215,280,220,265);  
+  fill(255); triangle(200,135,250,130,205,160); 
+      break;
+      case 4:
+     
+      noStroke();  
+  fill(0,25,51);
+  rect(200,100,30,5);
+  rect(190,105,50,5);
+  rect(180,110,70,5);
+  rect(170,115,90,5);
+  rect(160,120,110,5);
+  rect(140,125,150,5);
+  rect(130,130,170,10);
+  rect(120,140,190,10); fill(255); triangle(190,125,195,180,200,125); triangle(230,125,235,180,240,125);
+  fill(0,25,51);
+  rect(110,150,210,10);
+  rect(110,160,60,20); rect(170,150,90,25); rect(260,160,60,20); 
+  rect(110,180,50,10); rect(270,180,50,10); 
+  rect(110,190,40,10);  rect(280,190,40,10); 
+  rect(110,200,30,10);  rect(290,200,30,10);
+  rect(110,210,20,10);  rect(300,210,20,10);
+  rect(110,220,10,15);  rect(125,220,5,10); rect(300,220,5,10);  rect(310,220,10,15);
+  rect(170,160,90,65);
+  rect(160,225,110,5);
+  rect(150,230,130,5);
+  rect(140,235,150,10);
+  rect(145,245,50,10); rect(235,245,50,10);
+  rect(150,255,40,20); rect(240,255,40,20);
+  rect(155,265,30,20); rect(245,265,30,20);
+  rect(150,255,40,20); rect(240,255,40,20);
+  rect(165,285,25,20); rect(240,285,25,20);
+  rect(155,305,25,10); rect(250,305,25,10);
+  rect(145,315,30,10); rect(260,315,25,10);
+      break;
+}    
+}
+}
+      
